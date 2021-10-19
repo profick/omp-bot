@@ -6,41 +6,41 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/ozonmp/omp-bot/internal/app/commands/communication/review"
 	"github.com/ozonmp/omp-bot/internal/app/path"
-	service "github.com/ozonmp/omp-bot/internal/service/communication/review"
+	serviceReview "github.com/ozonmp/omp-bot/internal/service/communication/review"
 )
 
-type Commander interface {
+type subCommander interface {
 	HandleCallback(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath)
 	HandleCommand(message *tgbotapi.Message, commandPath path.CommandPath)
 }
 
-type CommunicationCommander struct {
-	bot             *tgbotapi.BotAPI
-	reviewCommander Commander
+type Commander struct {
+	bot                *tgbotapi.BotAPI
+	reviewSubCommander subCommander
 }
 
-func NewCommunicationCommander(bot *tgbotapi.BotAPI) *CommunicationCommander {
-	reviewService := service.NewCommunicationReviewService()
-	return &CommunicationCommander{
-		bot:             bot,
-		reviewCommander: review.NewCommunicationReviewCommander(bot, reviewService),
+func NewCommander(bot *tgbotapi.BotAPI) *Commander {
+	reviewService := serviceReview.NewService()
+	return &Commander{
+		bot:                bot,
+		reviewSubCommander: review.NewSubCommander(bot, reviewService),
 	}
 }
 
-func (c *CommunicationCommander) HandleCallback(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
+func (c *Commander) HandleCallback(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
 	switch callbackPath.Subdomain {
 	case "review":
-		c.reviewCommander.HandleCallback(callback, callbackPath)
+		c.reviewSubCommander.HandleCallback(callback, callbackPath)
 	default:
-		log.Printf("CommunicationCommander.HandleCallback: unknown subdomain - %s", callbackPath.Subdomain)
+		log.Printf("communication.Commander.HandleCallback: unknown subdomain - %s", callbackPath.Subdomain)
 	}
 }
 
-func (c *CommunicationCommander) HandleCommand(msg *tgbotapi.Message, commandPath path.CommandPath) {
+func (c *Commander) HandleCommand(msg *tgbotapi.Message, commandPath path.CommandPath) {
 	switch commandPath.Subdomain {
 	case "review":
-		c.reviewCommander.HandleCommand(msg, commandPath)
+		c.reviewSubCommander.HandleCommand(msg, commandPath)
 	default:
-		log.Printf("CommunicationCommander.HandleCommand: unknown subdomain - %s", commandPath.Subdomain)
+		log.Printf("communication.Commander.HandleCommand: unknown subdomain - %s", commandPath.Subdomain)
 	}
 }

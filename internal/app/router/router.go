@@ -57,7 +57,7 @@ func NewRouter(
 		// demoCommander
 		demoCommander: demo.NewDemoCommander(bot),
 		// communicationCommander
-		communicationCommander: communication.NewCommunicationCommander(bot),
+		communicationCommander: communication.NewCommander(bot),
 		// user
 		// access
 		// buy

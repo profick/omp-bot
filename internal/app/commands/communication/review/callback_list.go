@@ -13,14 +13,14 @@ type CallbackListData struct {
 	Offset int `json:"offset"`
 }
 
-func (c *CommunicationReviewCommander) CallbackList(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
-	senderFunc := createLogTextSenderFunc(c.bot, callback.Message.Chat.ID, "CallbackList")
-	msgSenderFunc := createLogMsgSenderFunc(c.bot, "CallbackList")
+func (c *SubCommander) callbackList(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
+	senderFunc := createLogTextSenderFunc(c.bot, callback.Message.Chat.ID, "callbackList")
+	msgSenderFunc := createLogMsgSenderFunc(c.bot, "callbackList")
 
 	parsedData := CallbackListData{}
 	err := json.Unmarshal([]byte(callbackPath.CallbackData), &parsedData)
 	if err != nil {
-		log.Printf("CommunicationReviewCommander.CallbackList: "+
+		log.Printf("review.SubCommander.callbackList: "+
 			"error reading json data for type CallbackListData from "+
 			"input string %v - %v", callbackPath.CallbackData, err)
 		senderFunc("server error")

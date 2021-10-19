@@ -11,8 +11,8 @@ import (
 
 const exampleCommandGet string = "/get__communication__review 1"
 
-func (c *CommunicationReviewCommander) Get(inputMsg *tgbotapi.Message) {
-	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "Get")
+func (c *SubCommander) get(inputMsg *tgbotapi.Message) {
+	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "get")
 
 	args := inputMsg.CommandArguments()
 	reviewID, err := strconv.ParseUint(args, 10, 64)

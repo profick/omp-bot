@@ -10,8 +10,8 @@ import (
 
 const exampleCommandDelete string = "/delete__communication__review 1"
 
-func (c *CommunicationReviewCommander) Delete(inputMsg *tgbotapi.Message) {
-	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "Delete")
+func (c *SubCommander) delete(inputMsg *tgbotapi.Message) {
+	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "delete")
 
 	args := inputMsg.CommandArguments()
 	reviewID, err := strconv.ParseUint(args, 10, 64)

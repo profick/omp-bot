@@ -12,8 +12,8 @@ import (
 const exampleCommandNew string = "/new__communication__review " +
 	"{\"user_id\": 1, \"item_id\": 1, \"text\": \"review text\", \"rating\": 5}"
 
-func (c *CommunicationReviewCommander) New(inputMsg *tgbotapi.Message) {
-	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "New")
+func (c *SubCommander) new(inputMsg *tgbotapi.Message) {
+	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "new")
 
 	args := inputMsg.CommandArguments()
 

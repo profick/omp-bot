@@ -12,8 +12,8 @@ import (
 const exampleCommandEdit string = "/edit__communication__review " +
 	"{\"review_id\": 1, \"user_id\": 1, \"item_id\": 1, \"text\": \"review text\", \"rating\": 5}"
 
-func (c *CommunicationReviewCommander) Edit(inputMsg *tgbotapi.Message) {
-	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "Edit")
+func (c *SubCommander) edit(inputMsg *tgbotapi.Message) {
+	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "edit")
 
 	args := inputMsg.CommandArguments()
 

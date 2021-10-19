@@ -11,11 +11,9 @@ import (
 
 const reviewsPerPage = 5
 
-const exampleCommandList string = "/list__communication__review 1 10"
-
-func (c *CommunicationReviewCommander) List(inputMsg *tgbotapi.Message) {
-	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "List")
-	msgSenderFunc := createLogMsgSenderFunc(c.bot, "List")
+func (c *SubCommander) list(inputMsg *tgbotapi.Message) {
+	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "list")
+	msgSenderFunc := createLogMsgSenderFunc(c.bot, "list")
 
 	reviews, err := c.reviewService.List(0, reviewsPerPage)
 	if err != nil {

@@ -13,7 +13,7 @@ const helpMessage string = "/help__communication__review - print help\n" +
 	"/edit__communication__review <EDIT_REVIEW_DATA> - edit existing review. <EDIT_REVIEW_DATA> example:" +
 	"{\"review_id\": 1, \"user_id\": 1, \"item_id\": 1, \"text\": \"review text\", \"rating\": 5}\n"
 
-func (c *CommunicationReviewCommander) Help(inputMsg *tgbotapi.Message) {
-	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "Help")
+func (c *SubCommander) help(inputMsg *tgbotapi.Message) {
+	senderFunc := createLogTextSenderFunc(c.bot, inputMsg.Chat.ID, "help")
 	senderFunc(helpMessage)
 }
